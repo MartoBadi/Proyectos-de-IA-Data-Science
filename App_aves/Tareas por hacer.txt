@@ -1,0 +1,19 @@
+1) Desarrollar el archivo index.html del proyecto agregando código javascript para que el modelo pueda generar un texto con la predicción, para esto es necesario:
+
+1.1) Ver cómo hay que procesar las imágenes que adjunte el usuario para ser procesadas por el modelo. Este preprocesamiento debería ser similar al que se hace en el notebook en el que se entrena el modelo.
+
+1.2) Hacer la predicción en el archivo index.html, un ejemplo de esto sería: var prediccion = modelo.predict(tensor).dataSync();
+
+1.3) Mostrar la predicción en la página web, un ejemplo de esto sería: document.getElementById("resultado").innerHTML = celsius + " celsius son " + prediccion + " fahrenheit!";
+
+2) Descargar el modelo completo de https://www.kaggle.com/datasets/gpiosenka/100-bird-species. El modelo es: EfficientNetB0-525-(224 X 224)- 98.97.h5. Cambiarle el nombre a model.h5
+
+3) Pasarlo a formato tfjs_graph_model corriendo en Google Colab este código: 
+!mkdir carpeta_salida
+!tensorflowjs_converter --input_format keras --output_format=tfjs_graph_model model.h5 carpeta_salida
+
+4) Crear una nueva carperta en la computadora, copiar el index.html que ya se hizo en la nueva carpeta, junto a los archivos .bin tfjs_graph_model generados en carpeta_salida (ver paso 3).
+
+5) Probar el modelo en un servidor local de python (correr en la terminal de VSC: python -m http.server 8000).
+
+6) Subirlo al dominio trepandojuntos.com y hacer que funcione en ese sitio web.

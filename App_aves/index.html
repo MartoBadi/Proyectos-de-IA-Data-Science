@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bird-App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: green;
+        }
+        .header {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .sidebar {
+            width: 350px;
+            float: left;
+            padding: 10px;
+        }
+        .body {
+            margin-left: 370px;
+            padding: 10px;
+        }
+        .row {
+            display: flex;
+        }
+        .column {
+            flex: 50%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1 style="font-size: 120%; font-weight: bold;">Bird-App</h1>
+        <div class="dropdown">
+            <a href="https://forloopsandpiepkicks.wordpress.com" target="_blank">
+                <i class="fa fa-question-circle fa-1x"></i> Creado por
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <label for="input_image">Archivo</label>
+        <input type="file" id="input_image" accept=".jpg,.jpeg">
+        <br><br>
+        <p>Sube la imagen aquí.</p>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+        <h4>Instrucción:</h4>
+        <br>
+        <p>1. Toma una foto de un pájaro.</p>
+        <p>2. Recorta la imagen para que el pájaro llene la mayor parte de la imagen.</p>
+        <p>3. Sube la imagen con el menú a la izquierda.</p>
+        <br>
+        <div class="row">
+            <div class="column">
+                <h4>Imagen:</h4>
+                <div id="output_image"></div>
+            </div>
+            <div class="column">
+                <h4>Resultado:</h4>
+                <br>
+                <div id="warntext"></div>
+                <br>
+                <p>Este pájaro es probablemente un:</p>
+                <div id="text"></div>
+            </div>
+        </div>
+        <br>
+    </div>
+</body>
+</html>

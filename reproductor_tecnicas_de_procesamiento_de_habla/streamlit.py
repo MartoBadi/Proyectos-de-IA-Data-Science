@@ -42,16 +42,16 @@ def cargar_audios():
    nombres_audios = []
 
    for filename in sorted(os.listdir("/content")):  # Carpeta con los audios
-   if filename.endswith(".mp3"):
+      if filename.endswith(".mp3"):
                                                                                                                          
-   audio = AudioSegment.from_file(os.path.join("/content", filename))                                                                              
+      audio = AudioSegment.from_file(os.path.join("/content", filename))                                                                              
 
-   audio_largo += audio * 5  # Repetir     cada audio 5 veces
+      audio_largo += audio * 5  # Repetir        cada audio 5 veces
                                                                                             
-   duraciones.append(len(audio) * 5)  
-# Duración total del audio repetido                                                                                                        nombres_audios.append(filename)
+      duraciones.append(len(audio) * 5)  
+    # Duración total del audio repetido                                                                                                           nombres_audios.append(filename)
 
-   return audio_largo, duraciones, nombres_audios                                                                                                                                                                                                                                                                      # Guardar el audio largo en un buffer     para reproducirlo                                                                                                               
+      return audio_largo, duraciones, nombres_audios                                                                                                                                                                                                                                                                    # Guardar el audio largo en un buffer     para reproducirlo                                                                                                               
 
 def guardar_audio_largo(audio_largo):                                                                                                             
    buffer = BytesIO()                                                                                                                      

@@ -22,47 +22,49 @@ strings = ["FRECUENCIA FUNDAMENTAL (TONO): Relacionada con la vibración", "de l
 # Generar los audios individuales
 audios = []
 for i, texto in enumerate(strings):
-    tts = gTTS(text=texto, lang='es')  # Generar el audio con gTTS
-        filename = f"audio_{i + 1}.mp3"
-            tts.save(filename)  # Guardar cada audio
-                audios.append(filename)
+    tts = gTTS(text=texto, lang='es')  
+# Generar el audio con gTTS
+    filename = f"audio_{i + 1}.mp3"
+    tts.save(filename)  # Guardar cada audio
+    audios.append(filename)
 
-                # Función para calcular la duración en formato HH:MM:SS
-                def formato_duracion(ms):
-                    segundos = int(ms / 1000)
-                        minutos = segundos // 60
-                            horas = minutos // 60
-                                return f"{horas:02}:{minutos % 60:02}:{segundos % 60:02}"
+# Función para calcular la duración en formato HH:MM:SS
+def formato_duracion(ms):
+    segundos = int(ms / 1000)
+    minutos = segundos // 60
+    horas = minutos // 60
+    return f"{horas:02}:{minutos % 60:02}:{segundos % 60:02}"
 
-                                # Cargar audios individuales y generar el audio largo
-                                def cargar_audios():
-                                    audio_largo = AudioSegment.empty()
-                                        duraciones = []
-                                            nombres_audios = []
+# Cargar audios individuales y generar el audio largo
+def cargar_audios(): 
+   audio_largo = AudioSegment.empty()                                        
+   duraciones = []                                                   
+   nombres_audios = []
 
-                                                for filename in sorted(os.listdir("/content")):  # Carpeta con los audios
-                                                        if filename.endswith(".mp3"):
-                                                                    audio = AudioSegment.from_file(os.path.join("/content", filename))
-                                                                                audio_largo += audio * 5  # Repetir cada audio 5 veces
-                                                                                            duraciones.append(len(audio) * 5)  # Duración total del audio repetido
-                                                                                                        nombres_audios.append(filename)
+   for filename in sorted(os.listdir("/content")):  # Carpeta con los audios
+   if filename.endswith(".mp3"):
+                                                                                                                         
+   audio = AudioSegment.from_file(os.path.join("/content", filename))                                                                              
 
-                                                                                                            return audio_largo, duraciones, nombres_audios
+   audio_largo += audio * 5  # Repetir     cada audio 5 veces
+                                                                                            
+   duraciones.append(len(audio) * 5)  
+# Duración total del audio repetido                                                                                                        nombres_audios.append(filename)
 
-                                                                                                            # Guardar el audio largo en un buffer para reproducirlo
-                                                                                                            def guardar_audio_largo(audio_largo):
-                                                                                                                buffer = BytesIO()
-                                                                                                                    audio_largo.export(buffer, format="mp3")
-                                                                                                                        buffer.seek(0)
-                                                                                                                            return buffer
+   return audio_largo, duraciones, nombres_audios                                                                                                                                                                                                                                                                      # Guardar el audio largo en un buffer     para reproducirlo                                                                                                               
 
-                                                                                                                            # Configuración de la aplicación
+def guardar_audio_largo(audio_largo):                                                                                                             
+   buffer = BytesIO()                                                                                                                      
+   audio_largo.export(buffer, format="mp3") 
+   buffer.seek(0)                                                                                                                                                                                                                                         
+   return buffer
+
+                                                                                                                         # Configuración de la aplicación
                                                                                                                             st.title("Reproductor de Audios")
 
                                                                                                                             # Cargar los audios desde la carpeta "audios"
                                                                                                                             audio_largo, duraciones, nombres_audios = cargar_audios()
                                                                                                                             audio_largo_buffer = guardar_audio_largo(audio_largo)
-
                                                                                                                             # Duración total del audio largo
                                                                                                                             duracion_total = sum(duraciones)
 

@@ -44,14 +44,13 @@ def cargar_audios():
    for filename in sorted(os.listdir("/content")):  # Carpeta con los audios
       if filename.endswith(".mp3"):
                                                                                                                          
-      audio = AudioSegment.from_file(os.path.join("/content", filename))                                                                              
+          audio = AudioSegment.from_file(os.path.join("/content", filename))                                                                              
 
-      audio_largo += audio * 5  # Repetir        cada audio 5 veces
+          audio_largo += audio * 5  # Repetir cada audio 5 veces
                                                                                             
-      duraciones.append(len(audio) * 5)  
-    # Duración total del audio repetido                                                                                                           nombres_audios.append(filename)
+          duraciones.append(len(audio) * 5) # Duración total del audio repetido                                                                                                           nombres_audios.append(filename)
 
-      return audio_largo, duraciones, nombres_audios                                                                                                                                                                                                                                                                    # Guardar el audio largo en un buffer     para reproducirlo                                                                                                               
+   return audio_largo, duraciones, nombres_audios                                                                                                                                                                                                                                                                    # Guardar el audio largo en un buffer     para reproducirlo                                                                                                               
 
 def guardar_audio_largo(audio_largo):                                                                                                             
    buffer = BytesIO()                                                                                                                      
@@ -59,37 +58,31 @@ def guardar_audio_largo(audio_largo):
    buffer.seek(0)                                                                                                                                                                                                                                         
    return buffer
 
-                                                                                                                         # Configuración de la aplicación
-                                                                                                                            st.title("Reproductor de Audios")
-
-                                                                                                                            # Cargar los audios desde la carpeta "audios"
-                                                                                                                            audio_largo, duraciones, nombres_audios = cargar_audios()
-                                                                                                                            audio_largo_buffer = guardar_audio_largo(audio_largo)
-                                                                                                                            # Duración total del audio largo
-                                                                                                                            duracion_total = sum(duraciones)
-
-                                                                                                                            # Mostrar las duraciones de los audios individuales
-                                                                                                                            st.subheader("Duraciones de los Audios")
-                                                                                                                            for i, (nombre, duracion) in enumerate(zip(nombres_audios, duraciones), 1):
-                                                                                                                                st.write(f"{i}. **{nombre}**: {formato_duracion(duracion)}")
-
-                                                                                                                                # Reproductor del audio largo
-                                                                                                                                st.subheader("Reproductor del Audio Largo")
-                                                                                                                                st.audio(audio_largo_buffer, format="audio/mp3")
-
-                                                                                                                                # Botones para redirigir al inicio de cada audio
-                                                                                                                                st.subheader("Ir al Inicio de los Audios")
-                                                                                                                                duracion_acumulada = 0
-                                                                                                                                for i, (nombre, duracion) in enumerate(zip(nombres_audios, duraciones)):
-                                                                                                                                    # Calcular el tiempo acumulado para este audio
-                                                                                                                                        inicio_audio = duracion_acumulada
-                                                                                                                                            fin_audio = duracion_acumulada + duracion
-                                                                                                                                                duracion_acumulada += duracion
-
-                                                                                                                                                    # Crear un botón para redirigir al inicio del audio
-                                                                                                                                                        if st.button(f"Ir a {nombre}", key=f"boton_{i}"):
-                                                                                                                                                                st.session_state["audio_actual"] = i
-
-                                                                                                                                                                    # Resaltar el botón si el audio actual está dentro de este rango
-                                                                                                                                                                        if "audio_actual" in st.session_state and st.session_state["audio_actual"] == i:
-                                                                                                                                                                                st.markdown(f"🎵 **Reproduciendo: {nombre}** 🎵")
+# Configuración de la aplicación
+st.title("Reproductor de Audios")
+# Cargar los audios desde la carpeta "audios"
+audio_largo, duraciones, nombres_audios = cargar_audios()
+audio_largo_buffer = guardar_audio_largo(audio_largo)
+# Duración total del audio largo
+duracion_total = sum(duraciones)
+# Mostrar las duraciones de los audios individuales
+st.subheader("Duraciones de los Audios")
+for i, (nombre, duracion) in enumerate(zip(nombres_audios, duraciones), 1):
+    st.write(f"{i}. **{nombre}**: {formato_duracion(duracion)}")
+# Reproductor del audio largo
+st.subheader("Reproductor del Audio Largo")
+st.audio(audio_largo_buffer, format="audio/mp3")
+# Botones para redirigir al inicio de cada audio
+st.subheader("Ir al Inicio de los Audios")
+duracion_acumulada = 0
+for i, (nombre, duracion) in enumerate(zip(nombres_audios, duraciones)):
+# Calcular el tiempo acumulado para este audio
+    inicio_audio = duracion_acumulada
+    fin_audio = duracion_acumulada + duracion
+    duracion_acumulada += duracion
+# Crear un botón para redirigir al inicio del audio
+    if st.button(f"Ir a {nombre}", key=f"boton_{i}"):
+        st.session_state["audio_actual"] = i
+    # Resaltar el botón si el audio actual está dentro de este rango
+    if "audio_actual" in st.session_state and st.session_state["audio_actual"] == i:
+        st.markdown(f"🎵 **Reproduciendo: {nombre}** 🎵")

@@ -1,0 +1,5 @@
+streamlit
+gTTS
+pydub
+os 
+io

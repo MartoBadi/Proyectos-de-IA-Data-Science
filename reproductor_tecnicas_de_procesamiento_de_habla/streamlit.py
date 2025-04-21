@@ -41,10 +41,10 @@ def cargar_audios():
    duraciones = []                                                   
    nombres_audios = []
 
-   for filename in sorted(os.listdir("/content")):  # Carpeta con los audios
+   for filename in sorted(os.listdir("reproductor_tecnicas_de_procesamiento_de_habla")):  # Carpeta con los audios
       if filename.endswith(".mp3"):
                                                                                                                          
-          audio = AudioSegment.from_file(os.path.join("/content", filename))                                                                              
+          audio = AudioSegment.from_file(os.path.join("reproductor_tecnicas_de_procesamiento_de_habla", filename))                                                                              
 
           audio_largo += audio * 5  # Repetir cada audio 5 veces
                                                                                             
